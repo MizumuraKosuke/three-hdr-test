@@ -50,28 +50,19 @@ const Sphere = ({ envMap }: { envMap: Texture | undefined }) => {
       scale={active ? 1.5 : 1}
       onClick={() => setActive(!active)}
     >
-      <sphereGeometry args={[1, 2, 3]} />
+      <sphereGeometry args={[1, 5, 5]} />
       <meshStandardMaterial
         envMap={envMap}
         roughness={0.0}
         metalness={1}
+        transparent
       />
     </mesh>
   )
 }
 
 const Objects = () => {
-  const mesh = useRef<Mesh>(null)
-  const [hovered, setHover] = useState(false)
-  const [active, setActive] = useState(false)
   const [envMap, setEnvMap] = useState<DataTexture>()
-
-  useFrame((state, delta) => {
-    if (mesh.current === null) {
-      return
-    }
-    mesh.current.rotation.x += delta
-  })
 
   useEffect(() => {
     new RGBELoader().load('/hdr/sample.hdr', (texture) => {
